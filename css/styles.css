@@ -11,6 +11,16 @@ a {
   color: white;
 }
 
+.content {
+  font-family: "Fontdiner Swanky", serif;
+  font-weight: 10;
+  font-size: 30px;
+  font-style: thin;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .logo-name-font {
   font-family: "Fontdiner Swanky", serif;
   font-weight: 400;
