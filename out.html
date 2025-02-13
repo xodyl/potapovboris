@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>3DGS rendered with gsplat.js</title>
+        <style>
+        body,
+        html {
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+        }
+
+        canvas {
+          width: 100vw;
+          height: 100vh;
+        }
+        </style>
+    </head>
+    <body>
+        <canvas id="canvas"></canvas>
+
+        <script type="module">
+        import * as SPLAT from "https://cdn.jsdelivr.net/npm/gsplat@1.2.3";
+
+        const canvas = document.getElementById("canvas");
+        const dataContainer = document.getElementById('data');
+
+        const renderer = new SPLAT.WebGLRenderer(canvas);
+        const scene = new SPLAT.Scene();
+        const camera = new SPLAT.Camera();
+        const controls = new SPLAT.OrbitControls(camera, canvas);
+
+
+        async function main() {
+            const url = '/out.splat'
+            await SPLAT.Loader.LoadAsync(url, scene, () => {});
+            const handleResize = () => {
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            };
+
+            const frame = () => {
+                controls.update();
+                renderer.render(scene, camera);
+
+                requestAnimationFrame(frame);
+            };
+
+            handleResize();
+            window.addEventListener("resize", handleResize);
+
+            requestAnimationFrame(frame);
+        }
+
+        main();
+
+        </script>
+    </body>
+</html>
