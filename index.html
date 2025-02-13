@@ -5,22 +5,30 @@
 		<title>Boris Potapov</title>
 	</head>
 	<body>
-    <div class="video-bg">
-      <video id="background" src="static/background.mp4" type="video/mp4" autoplay muted loop></video>
-      <div class="video-bg__content">
-        <!-- <div class="blurred-circle"></div> -->
-        <a href="">
-          <h1 class="logo-name-font">Boris Potapov</h1>
-        </a>
-        <a href="out.html">
-          <text class="content">3DGS render</text>
-        </a>
-      </div>
+
+    <video class="video-bg" autoplay loop muted playsinline>
+        <source src="static/background.mp4" type="video/mp4">
+        error.. (-.- #)
+    </video>
+
+    <div class="container">
+        <header>
+          <a href="out.html" class="link">
+            <text class="content">3DGS render</text>
+          </a>
+        </header>
+        
+        <main>
+          <a href="">
+            <h1 class="logo-name-font">Boris Potapov</h1>
+          </a>
+        </main>
+
+        <footer>
+          <text class="footer-font">2025</text>
+          <text class="footer-font">work in progress</text>
+        </footer>
     </div>
-	  <script src="js/main.js"></script>
+  <script src="js/main.js"></script>
   </body>
-  <footer>
-    <text class="footer-font">2025</text>
-    <text class="footer-font">work in progress</text>
-  </footer>
-</html>
+  </html>

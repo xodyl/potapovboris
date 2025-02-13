@@ -1,8 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Fontdiner+Swanky&display=swap');
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-    margin: 0;
-    padding: 0;
+  color: white;
 }
 
 a {
@@ -11,75 +16,67 @@ a {
   color: white;
 }
 
-.content {
+header, footer {
+  padding: 20px;
+  text-align: center;
   font-family: "Fontdiner Swanky", serif;
   font-weight: 10;
-  font-size: 30px;
+  font-size: 20px;
   font-style: thin;
+}
+
+
+.link {
+  position: relative;
+  display: inline-block;
+}
+
+.link::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0); 
+  transition: background 0.1s ease-in-out;
+  z-index: -1;
+}
+
+.link:hover::before {
+  background: rgba(0, 0, 0, 1);
+}
+
+main {
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.video-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .logo-name-font {
   font-family: "Fontdiner Swanky", serif;
-  font-weight: 400;
-  font-style: bold;
+  font-size: 100px;
+  font-weight: bold;
   white-space: nowrap;
-}
-
-.footer-font {
-  font-family: "Fontdiner Swanky", serif;
-  font-weight: 10;
-  font-size: 30px;
-  font-style: thin;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.blurred-circle {
-  width: 170px;
-  height: 170px;
-  background: radial-gradient(circle, rgba(0, 0, 0, 1) 40%, rgba(0, 0, 0, 0.3) 60%, rgba(0, 0, 0, 0) 80%);
-  /* border-radius: 50%; */
-  filter: blur(12px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: auto;
-}
-
-.video-bg {
-    height: 100vh;
-    width: 100%;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
-
-.video-bg video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    width: 100%;
-    height: 100vh;
-    object-fit: cover;
-    filter: blur(calc(var(--dur, 0) * 1px));
-}
-
-.video-bg__content {
-    z-index: 2;
-    color: #ffffff;
-    font-size: 50px;
-}
-
-.main {
-    max-width: 1600px;
-    margin: 0 auto;
-    margin-top: 50px;
-    padding: 0 20px;
 }
