@@ -25,6 +25,10 @@ header, footer {
   font-style: thin;
 }
 
+canvas{
+  z-index: -1;
+}
+
 
 .link {
   position: relative;
