@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   containers.forEach(container => {
     setupDrag(container);
-    setupResize(container);
+    // setupResize(container);
     randomizePosition(container);
     // adjustContainerSize(container); // Подстроим контейнер по содержимому
 
