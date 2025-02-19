@@ -1,34 +1,89 @@
 <!DOCTYPE html>
-	<head>
+<html>
+  <head>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
-		<title>Boris Potapov</title>
-	</head>
-	<body>
+    <title>Boris Potapov</title>
+  </head>
+  <body>
 
     <video class="video-bg" autoplay loop muted playsinline>
         <source src="static/background.mp4" type="video/mp4">
         error.. (-.- #)
     </video>
 
-    <div class="container">
+    <div class="container-main">
+      
         <header>
-          <a href="out.html" class="link">
-            <text class="content">3DGS render</text>
-          </a>
+          <nav>
+            <a href="" class="link">
+              <text class="content">blog</text>
+            </a>
+            <a href="" class="link">
+              <text class="content">works</text>
+            </a>
+            <a href="" class="link">
+              <text class="content">bio</text>
+            </a>
+          </nav>
         </header>
         
         <main>
+          
           <a href="">
             <h1 class="logo-name-font">Boris Potapov</h1>
           </a>
+
+          <div class="container">
+            <div class="header">
+              <span class="title">Boris bold rotated head</span>
+              <button class="close-btn">x</button>
+            </div>
+            <div class="media-content">
+              <div class="video-container">
+                <video autoplay loop muted playsinline>
+                  <source src="static/0001-0021.webm" type="video/webm">
+                  error..
+                </video>
+              </div>
+            </div>
+            <div class="resize-handle"></div>
+          </div>
+
+          <div class="container">
+            <div class="header">
+              <span class="title">Boris bold rotated head</span>
+              <button class="close-btn">x</button>
+            </div>
+            <div class="media-content">
+               <canvas id="canvas"></canvas>
+            </div>
+            <div class="resize-handle"></div>
+          </div>
+
+          <div class="container">
+            <div class="header">
+              <span class="title">Bio</span>
+              <button class="close-btn">x</button>
+            </div>
+            <div class="text-content">
+              <div class="text-container">
+                Hi! My name is Boris. I'm mixed media artist and creative livecoder from Russia.
+              </div>
+            </div>
+            <div class="resize-handle"></div>
+        </div>
+
+
         </main>
 
         <footer>
           <text class="footer-font">2025</text>
           <text class="footer-font">work in progress</text>
         </footer>
+
     </div>
   <script src="js/main.js"></script>
+  <script type="module" src="js/module.js"></script>
   </body>
-  </html>
+</html>

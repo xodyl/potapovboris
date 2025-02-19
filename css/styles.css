@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fontdiner+Swanky&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fontdiner+Swanky&family=VT323&display=swap');
 
 * {
   margin: 0;
@@ -7,19 +7,42 @@
 }
 
 body {
-  color: white;
+  /* color: white; */
 }
 
-a {
-  outline: none;
-  text-decoration: none;
-  color: white;
+header {
+ display: flex;
+  justify-content: center;
+  align-items: center; 
+
+  margin-top: 10px;
+  /* background: black; */
+  /* padding-inline-end: 5px; */
+  /* padding-inline-start: 5px; */
+  /* gap: 10px; */
+
+  font-family: "VT323", serif;
+  font-weight: 10;
+  font-size: 25px;
+  font-style: thin;
 }
 
-header, footer {
-  padding: 20px;
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  flex-direction: column; 
+  align-items: center;
   text-align: center;
-  font-family: "Fontdiner Swanky", serif;
+  padding: 20px;
+}
+
+footer {
+  width: 100%;
+  color: white;
+  margin-bottom: 20px;
+  text-align: center;
+  font-family: "VT323", serif;
   font-weight: 10;
   font-size: 20px;
   font-style: thin;
@@ -29,10 +52,31 @@ canvas{
   z-index: -1;
 }
 
+nav {
+  display: flex;
+  gap: 10px;
+}
+
+a {
+  outline: none;
+  text-decoration: none;
+  color: white;
+}
+
+.text-container{
+  /* margin-top: 10px; */
+  padding: 5px;
+  text-align: justify;
+
+  font-family: "VT323", serif;
+  font-weight: 10;
+  font-size: 20px;
+  font-style: thin;
+  line-height: 1;
+}
 
 .link {
   position: relative;
-  display: inline-block;
 }
 
 .link::before {
@@ -48,16 +92,7 @@ canvas{
 }
 
 .link:hover::before {
-  background: rgba(0, 0, 0, 1);
-}
-
-main {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 20px;
+  background: rgba(0, 0, 255, 1);
 }
 
 .video-bg {
@@ -67,10 +102,13 @@ main {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  filter: blur(5px);
+  filter: brightness(90%) blur(0.5px);
   z-index: -1;
+  transform: scale(1.1);
 }
 
-.container {
+.container-main {
   position: relative;
   z-index: 1;
   display: flex;
@@ -80,7 +118,93 @@ main {
 
 .logo-name-font {
   font-family: "Fontdiner Swanky", serif;
+  /* font-family: "VT323", serif; */
   font-size: 100px;
-  font-weight: bold;
+  font-weight: regular;
   white-space: nowrap;
+  user-select: none;
 }
+
+.container {
+  position: absolute;
+  width: auto;  /* Контейнер будет подстраиваться по ширине под контент */
+  height: auto; /* Контейнер будет подстраиваться по высоте под контент */
+  min-height: 10px;  /* или любое значение, подходящее для вашего контента */
+  max-height: auto;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid #ccc;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.9);
+  cursor: move;
+  overflow: hidden;
+
+  font-family: "VT323", serif;
+  font-weight: 10;
+  font-size: 20px;
+  font-style: thin;
+  line-height: 1;
+
+  display: flex;
+  flex-direction: column;
+}
+
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+  color: white;
+  cursor: move;
+  user-select: none;
+}
+
+.title {
+  padding-left: 5px;
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
+}
+
+.close-btn {
+  padding: 0px 10px 0px 10px;
+  background: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+
+  font-family: "VT323", serif;
+  font-weight: 10;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.close-btn:hover {
+  background-color: rgba(0, 0, 255, 1);
+}
+
+.media-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+
+.text-content {
+  overflow: hidden;
+  flex: 1;
+  display: flex;
+  justify-content: center;  /
+  align-items: top;      
+}
+
+.resize-handle {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 10px;
+  height: 10px;
+  background-color: black;
+  border: 1px solid #ccc;
+  cursor: se-resize;
+}
+
