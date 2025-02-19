@@ -69,13 +69,6 @@ document.addEventListener("DOMContentLoaded", () => {
                       </video>`
         },
         {
-            title: "Boris sketchbook",
-            content: `<video autoplay loop muted playsinline>
-                        <source src="static/sketchbook0001-1173.webm" type="video/webm">
-                        error..
-                      </video>`
-        },
-        {
             title: "3DGS Render",
             content: `<canvas id="canvas"></canvas>`
         }
