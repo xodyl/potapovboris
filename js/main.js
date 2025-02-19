@@ -41,7 +41,8 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     const worksLink = document.getElementById("works-link");
-    const main = document.querySelector('main');
+    const bioLink = document.getElementById("bio-link");
+    const main = document.querySelector("main");
 
     let zIndexCounter = 1;
 
@@ -54,7 +55,21 @@ document.addEventListener("DOMContentLoaded", () => {
                       </video>`
         },
         {
-            title: "Boris sketchbook mp4",
+            title: "Boris tag",
+            content: `<video autoplay loop muted playsinline>
+                        <source src="static/boris_tag0001-0013.webm" type="video/webm">
+                        error..
+                      </video>`
+        },
+        {
+            title: "Aphex demon",
+            content: `<video autoplay loop muted playsinline>
+                        <source src="static/demon0001-0022.webm" type="video/webm">
+                        error..
+                      </video>`
+        },
+        {
+            title: "Boris sketchbook",
             content: `<video autoplay loop muted playsinline>
                         <source src="static/sketchbook0001-1173.webm" type="video/webm">
                         error..
@@ -63,46 +78,47 @@ document.addEventListener("DOMContentLoaded", () => {
         {
             title: "3DGS Render",
             content: `<canvas id="canvas"></canvas>`
-        },
-        {
-            title: "Bio",
-            content: `<div class="text-container">Hi! My name is Boris. (,_, )</div>`
         }
     ];
 
     function createContainers() {
-        document.querySelectorAll('.container').forEach(el => el.remove());
+        // Удаляем только окна "Works", "Bio" не трогаем
+        document.querySelectorAll(".container").forEach(el => {
+            if (el.dataset.title !== "Bio") el.remove();
+        });
 
         windowData.forEach(win => {
-            const container = document.createElement("div");
-            container.classList.add("container");
-
-            container.innerHTML = `
-                <div class="header">
-                    <span class="title">${win.title}</span>
-                    <button class="close-btn">x</button>
-                </div>
-                <div class="media-content">${win.content}</div>
-            `;
-
-            main.appendChild(container);
-            setupContainer(container);
-
-            if (win.title === "3DGS Render") {
-                const canvas = container.querySelector("#canvas");
-                initialize3DRenderer(canvas); // Инициализация рендерера
-            }
+            createWindow(win.title, win.content);
         });
     }
 
-    function initialize3DRenderer(canvas) {
-        import("./module.js")
-            .then((module) => {
-                module.initialize(canvas); // Вызов функции из модуля
-            })
-            .catch((err) => {
-                console.error("Ошибка загрузки модуля 3DGS:", err);
-            });
+    function createWindow(title, content) {
+        const container = document.createElement("div");
+        container.classList.add("container");
+        container.setAttribute("data-title", title);
+
+        container.innerHTML = `
+            <div class="header">
+                <span class="title">${title}</span>
+                <button class="close-btn">x</button>
+            </div>
+            <div class="media-content">${content}</div>
+        `;
+
+        main.appendChild(container);
+        setupContainer(container);
+
+        if (title === "3DGS Render") {
+            const canvas = container.querySelector("#canvas");
+            initialize3DRenderer(canvas);
+        }
+    }
+
+    function createBio() {
+        // Удаляем старый Bio, если он есть
+        document.querySelectorAll('.container[data-title="Bio"]').forEach(el => el.remove());
+
+        createWindow("Bio", `<div class="text-container">Hi! My name is Boris. (,_, )</div>`);
     }
 
     function setupContainer(container) {
@@ -168,10 +184,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function randomizePosition(container) {
-        keepContainerInBounds(container,
-            Math.random() * (window.innerWidth - container.offsetWidth),
-            Math.random() * (window.innerHeight - container.offsetHeight)
-        );
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+
+        const maxOffsetX = (window.innerWidth - container.offsetWidth) / 4;
+        const maxOffsetY = (window.innerHeight - container.offsetHeight) / 4;
+
+        const randomX = centerX - container.offsetWidth / 2 + (Math.random() - 0.5) * 2 * maxOffsetX;
+        const randomY = centerY - container.offsetHeight / 2 + (Math.random() - 0.5) * 2 * maxOffsetY;
+
+        keepContainerInBounds(container, randomX, randomY);
     }
 
     worksLink.addEventListener("click", (event) => {
@@ -179,5 +201,11 @@ document.addEventListener("DOMContentLoaded", () => {
         createContainers();
     });
 
+    bioLink.addEventListener("click", (event) => {
+        event.preventDefault();
+        createBio();
+    });
+
+    // Открываем все окна "Works" при загрузке
     createContainers();
 });
