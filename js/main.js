@@ -40,12 +40,11 @@
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    const worksLink = document.getElementById("works-link"); // Теперь выбираем по ID
+    const worksLink = document.getElementById("works-link");
     const main = document.querySelector('main');
 
-    let zIndexCounter = 1; // Глобальный счетчик z-index
+    let zIndexCounter = 1;
 
-    // Исходные данные окон
     const windowData = [
         {
             title: "Boris bold rotated head",
@@ -72,10 +71,8 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     function createContainers() {
-        // Удаляем старые контейнеры
         document.querySelectorAll('.container').forEach(el => el.remove());
 
-        // Создаем новые
         windowData.forEach(win => {
             const container = document.createElement("div");
             container.classList.add("container");
@@ -89,8 +86,23 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
 
             main.appendChild(container);
-            setupContainer(container); // Применяем логику к новому контейнеру
+            setupContainer(container);
+
+            if (win.title === "3DGS Render") {
+                const canvas = container.querySelector("#canvas");
+                initialize3DRenderer(canvas); // Инициализация рендерера
+            }
         });
+    }
+
+    function initialize3DRenderer(canvas) {
+        import("./3dgs-renderer.js") // Динамически импортируем ваш рендер-скрипт
+            .then((module) => {
+                module.initialize(canvas); // Вызов функции из модуля
+            })
+            .catch((err) => {
+                console.error("Ошибка загрузки модуля 3DGS:", err);
+            });
     }
 
     function setupContainer(container) {
@@ -98,13 +110,11 @@ document.addEventListener("DOMContentLoaded", () => {
         randomizePosition(container);
         adjustOnResize(container);
 
-        // Кнопка закрытия
         const closeButton = container.querySelector(".close-btn");
         closeButton.addEventListener("click", () => {
-            container.remove(); // Полностью удаляем контейнер
+            container.remove();
         });
 
-        // Выводим контейнер на передний план при клике
         container.addEventListener("mousedown", () => {
             bringContainerToFront(container);
         });
@@ -112,9 +122,8 @@ document.addEventListener("DOMContentLoaded", () => {
         window.addEventListener("resize", () => adjustOnResize(container));
     }
 
-    // Функция для перемещения контейнера на передний план
     function bringContainerToFront(container) {
-        zIndexCounter++; // Увеличиваем глобальный счетчик
+        zIndexCounter++;
         container.style.zIndex = zIndexCounter;
     }
 
@@ -122,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let offsetX, offsetY, isDragging = false;
 
         container.addEventListener("mousedown", (e) => {
-            if (e.target.closest(".close-btn")) return; // Игнорируем клик по кнопке закрытия
+            if (e.target.closest(".close-btn")) return;
 
             bringContainerToFront(container);
             isDragging = true;
@@ -159,19 +168,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function randomizePosition(container) {
-        keepContainerInBounds(container, 
-            Math.random() * (window.innerWidth - container.offsetWidth), 
+        keepContainerInBounds(container,
+            Math.random() * (window.innerWidth - container.offsetWidth),
             Math.random() * (window.innerHeight - container.offsetHeight)
         );
     }
 
-    // Вешаем обработчик на "works"
     worksLink.addEventListener("click", (event) => {
-        event.preventDefault(); // Чтобы не обновлялась страница
+        event.preventDefault();
         createContainers();
     });
 
-    // Создаем окна при первой загрузке
     createContainers();
 });
-
