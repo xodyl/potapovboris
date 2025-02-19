@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setupDrag(container);
     // setupResize(container);
     randomizePosition(container);
-    // adjustContainerSize(container); // Подстроим контейнер по содержимому
+    adjustOnResize(container); // Подстроим контейнер по содержимому
 
     // Кнопка закрытия
     const closeButton = container.querySelector(".close-btn");
@@ -80,7 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let offsetX, offsetY, isDragging = false;
 
     header.addEventListener("mousedown", (e) => {
-      // Установить z-index на передний план сразу при захвате
       bringContainerToFront(container);
 
       isDragging = true;
@@ -160,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function adjustOnResize(container) {
     keepContainerInBounds(container);
-    adjustContainerSize(container, false); // Убираем автоматическую подстройку размера при ресайзе окна
+    // adjustContainerSize(container, false); // Убираем автоматическую подстройку размера при ресайзе окна
   }
 
   function randomizePosition(container) {

@@ -47,10 +47,6 @@ footer {
   font-style: thin;
 }
 
-canvas{
-  z-index: -1;
-}
-
 nav {
   display: flex;
   gap: 10px;
@@ -126,10 +122,10 @@ a {
   position: absolute;
   width: auto;  
   height: auto; 
-  min-height: 40px;  
-  max-height: 500px;
+  min-height: 30px;
+  /* min-height: 40px;   */
   background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.9);
   cursor: move;
   overflow: hidden;
@@ -137,11 +133,10 @@ a {
   font-family: "VT323", serif;
   font-weight: 10;
   font-size: 20px;
-  font-style: thin;
   line-height: 1;
 
-  display: flex;
-  flex-direction: column;
+  /* display: flex; */
+  /* flex-direction: column; */
   pointer-events: none; 
 }
 
@@ -184,14 +179,20 @@ a {
   display: flex;
   justify-content: center;
   align-items: center; 
-  lign-items: top; 
 }
 
 .media-content {
   flex: 1;
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
+}
+
+.video-container {
+  width: auto; /* или заданная ширина */
+  height: auto; /* или соответствующая высота */
+  min-height: 30px;
+  overflow: hidden;
 }
 
 .text-content {
@@ -210,14 +211,14 @@ a {
   pointer-events: auto;
 }
 
-.resize-handle {
-  position: absolute;
-  bottom: 5px;
-  right: 5px;
-  width: 10px;
-  height: 10px;
-  background-color: black;
-  border: 1px solid #ccc;
-  cursor: se-resize;
-}
-
+/* .resize-handle { */
+/*   position: absolute; */
+/*   bottom: 5px; */
+/*   right: 5px; */
+/*   width: 10px; */
+/*   height: 10px; */
+/*   background-color: black; */
+/*   border: 1px solid #ccc; */
+/*   cursor: se-resize; */
+/* } */
+/*  */
