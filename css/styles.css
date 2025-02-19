@@ -130,7 +130,7 @@ a {
   width: auto;  /* Контейнер будет подстраиваться по ширине под контент */
   height: auto; /* Контейнер будет подстраиваться по высоте под контент */
   min-height: 10px;  /* или любое значение, подходящее для вашего контента */
-  max-height: auto;
+  max-height: 500px;
   background-color: rgba(255, 255, 255, 0.8);
   border: 1px solid #ccc;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.9);
