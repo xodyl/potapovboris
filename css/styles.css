@@ -132,9 +132,9 @@ a {
 
 .container {
   position: absolute;
-  width: auto;  /* Контейнер будет подстраиваться по ширине под контент */
-  height: auto; /* Контейнер будет подстраиваться по высоте под контент */
-  min-height: 10px;  /* или любое значение, подходящее для вашего контента */
+  width: auto;  
+  height: auto; 
+  min-height: 10px;  
   max-height: 500px;
   background-color: rgba(255, 255, 255, 0.8);
   border: 1px solid #ccc;
@@ -150,7 +150,7 @@ a {
 
   display: flex;
   flex-direction: column;
-  pointer-events: none; /* Контейнер не блокирует события */
+  pointer-events: none; 
 }
 
 
@@ -204,11 +204,11 @@ a {
 }
 
 .media-content canvas {
-  pointer-events: auto; /* Разрешаем события внутри канваса */
+  pointer-events: auto;
 }
 
 .header, .resize-handle, .close-btn {
-  pointer-events: auto; /* Эти элементы должны работать */
+  pointer-events: auto;
 }
 
 .resize-handle {
