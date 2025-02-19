@@ -110,41 +110,45 @@ document.addEventListener("DOMContentLoaded", () => {
     const resizeHandle = container.querySelector(".resize-handle");
     let isResizing = false, startX, startY, startWidth, startHeight;
 
+    // Сохраняем исходные размеры контейнера
+    const initialWidth = container.offsetWidth;
+    const initialHeight = container.offsetHeight;
+
     resizeHandle.addEventListener("mousedown", (e) => {
-      isResizing = true;
-      startX = e.clientX;
-      startY = e.clientY;
-      startWidth = container.offsetWidth;
-      startHeight = container.offsetHeight;
+        isResizing = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        startWidth = container.offsetWidth;
+        startHeight = container.offsetHeight;
 
-      function onMouseMove(e) {
-        if (!isResizing) return;
+        function onMouseMove(e) {
+            if (!isResizing) return;
 
-        let newWidth = e.clientX - container.offsetLeft;
-        let newHeight = e.clientY - container.offsetTop;
+            let newWidth = startWidth - (startX - e.clientX);
+            let newHeight = startHeight - (startY - e.clientY);
 
-        const maxWidth = window.innerWidth - container.offsetLeft;
-        const maxHeight = window.innerHeight - container.offsetTop;
+            // Ограничиваем изменения в пределах (минимальный размер, начальный размер)
+            if (newWidth >= 150 && newWidth <= initialWidth) {
+                container.style.width = `${newWidth}px`;
+            }
+            if (newHeight >= 100 && newHeight <= initialHeight) {
+                container.style.height = `${newHeight}px`;
+            }
 
-        newWidth = Math.max(150, Math.min(newWidth, maxWidth));
-        newHeight = Math.max(100, Math.min(newHeight, maxHeight));
+            keepContainerInBounds(container);
+        }
 
-        container.style.width = `${newWidth}px`;
-        container.style.height = `${newHeight}px`;
+        function onMouseUp() {
+            isResizing = false;
+            document.removeEventListener("mousemove", onMouseMove);
+            document.removeEventListener("mouseup", onMouseUp);
+        }
 
-        keepContainerInBounds(container);
-      }
-
-      function onMouseUp() {
-        isResizing = false;
-        document.removeEventListener("mousemove", onMouseMove);
-        document.removeEventListener("mouseup", onMouseUp);
-      }
-
-      document.addEventListener("mousemove", onMouseMove);
-      document.addEventListener("mouseup", onMouseUp);
+        document.addEventListener("mousemove", onMouseMove);
+        document.addEventListener("mouseup", onMouseUp);
     });
   }
+
 
   function keepContainerInBounds(container, x = container.offsetLeft, y = container.offsetTop) {
     const maxX = window.innerWidth - container.offsetWidth;
