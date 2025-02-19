@@ -82,7 +82,6 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     function createContainers() {
-        // Удаляем только окна "Works", "Bio" не трогаем
         document.querySelectorAll(".container").forEach(el => {
             if (el.dataset.title !== "Bio") el.remove();
         });
@@ -115,7 +114,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function createBio() {
-        // Удаляем старый Bio, если он есть
         document.querySelectorAll('.container[data-title="Bio"]').forEach(el => el.remove());
 
         createWindow("Bio", `<div class="text-container">Hi! My name is Boris. (,_, )</div>`);
@@ -196,6 +194,16 @@ document.addEventListener("DOMContentLoaded", () => {
         keepContainerInBounds(container, randomX, randomY);
     }
 
+    function initialize3DRenderer(canvas) {
+        import("./module.js")
+            .then((module) => {
+                module.initialize(canvas);
+            })
+            .catch((err) => {
+                console.error("Ошибка загрузки 3DGS:", err);
+            });
+    }
+
     worksLink.addEventListener("click", (event) => {
         event.preventDefault();
         createContainers();
@@ -206,6 +214,5 @@ document.addEventListener("DOMContentLoaded", () => {
         createBio();
     });
 
-    // Открываем все окна "Works" при загрузке
     createContainers();
 });
