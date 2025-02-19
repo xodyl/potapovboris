@@ -11,11 +11,8 @@ canvas {
   height: 360px;
 }
 
-body {
-}
-
 header {
- display: flex;
+  display: flex;
   justify-content: center;
   align-items: center; 
   margin-top: 10px;
@@ -122,8 +119,7 @@ a {
   position: absolute;
   width: auto;  
   height: auto; 
-  min-height: 30px;
-  /* min-height: 40px;   */
+  min-height: auto;
   background-color: rgba(255, 255, 255, 0.8);
   /* border: 1px solid #ccc; */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.9);
@@ -186,13 +182,6 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.video-container {
-  width: auto; /* или заданная ширина */
-  height: auto; /* или соответствующая высота */
-  min-height: 30px;
-  overflow: hidden;
 }
 
 .text-content {
