@@ -40,7 +40,7 @@
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    const worksLink = document.getElementById("works-link"); 
+    const worksLink = document.getElementById("works-link"); // Теперь выбираем по ID
     const main = document.querySelector('main');
 
     let zIndexCounter = 1; // Глобальный счетчик z-index
