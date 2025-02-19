@@ -152,7 +152,6 @@ a {
   pointer-events: none; 
 }
 
-
 .header {
   display: flex;
   justify-content: space-between;
@@ -205,11 +204,11 @@ a {
   overflow: hidden;
   flex: 1;
   display: flex;
-  justify-content: center;  /
+  justify-content: center; 
   align-items: top;      
 }
 
-.media-content canvas {
+.splat-content canvas {
   pointer-events: auto;
 }
 

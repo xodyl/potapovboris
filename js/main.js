@@ -163,14 +163,6 @@ document.addEventListener("DOMContentLoaded", () => {
     adjustContainerSize(container, false); // Убираем автоматическую подстройку размера при ресайзе окна
   }
 
-  // function adjustContainerSize(container, force = true) {
-  //   const content = container.querySelector(".content");
-  //   if (force) {
-  //     container.style.width = `${content.scrollWidth + 10}px`;
-  //     container.style.height = `${content.scrollHeight + 40}px`;
-  //   }
-  // }
-
   function randomizePosition(container) {
     keepContainerInBounds(container, Math.random() * (window.innerWidth - container.offsetWidth), Math.random() * (window.innerHeight - container.offsetHeight));
   }
