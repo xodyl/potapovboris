@@ -152,7 +152,9 @@ a {
 
   display: flex;
   flex-direction: column;
+  pointer-events: none; /* Контейнер не блокирует события */
 }
+
 
 
 .header {
@@ -202,6 +204,14 @@ a {
   display: flex;
   justify-content: center;  /
   align-items: top;      
+}
+
+.media-content canvas {
+  pointer-events: auto; /* Разрешаем события внутри канваса */
+}
+
+.header, .resize-handle, .close-btn {
+  pointer-events: auto; /* Эти элементы должны работать */
 }
 
 .resize-handle {
