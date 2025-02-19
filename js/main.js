@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const windowData = [
         {
-            title: "Boris bold rotated head",
+            title: "Bold rotated head",
             content: `<video autoplay loop muted playsinline>
                         <source src="static/0001-0021.webm" type="video/webm">
                         error..

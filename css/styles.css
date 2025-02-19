@@ -46,7 +46,9 @@ footer {
 
 nav {
   display: flex;
+  background: black;
   gap: 10px;
+  z-index: 999;
 }
 
 a {
