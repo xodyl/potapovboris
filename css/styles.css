@@ -9,23 +9,16 @@
 canvas {
   width: 360px; 
   height: 360px;
-  /* display: block; */
 }
 
 body {
-  /* color: white; */
 }
 
 header {
  display: flex;
   justify-content: center;
   align-items: center; 
-
   margin-top: 10px;
-  /* background: black; */
-  /* padding-inline-end: 5px; */
-  /* padding-inline-start: 5px; */
-  /* gap: 10px; */
 
   font-family: "VT323", serif;
   font-weight: 10;
@@ -187,10 +180,13 @@ a {
 }
 
 .splat-content {
+  /* flex: 1; */
+  /* display: flex; */
+  /* justify-content: left; */
   flex: 1;
   display: flex;
-  justify-content: left;
-  align-items: top; 
+  justify-content: center;
+  align-items: center; lign-items: top; 
 }
 
 .media-content {
