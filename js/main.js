@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function initialize3DRenderer(canvas) {
-        import("./3dgs-renderer.js") // Динамически импортируем ваш рендер-скрипт
+        import("./module.js")
             .then((module) => {
                 module.initialize(canvas); // Вызов функции из модуля
             })
