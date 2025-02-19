@@ -75,12 +75,13 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     function createContainers() {
-        document.querySelectorAll(".container").forEach(el => {
-            if (el.dataset.title !== "Bio") el.remove();
-        });
-
         windowData.forEach(win => {
-            createWindow(win.title, win.content);
+            const existingContainer = document.querySelector(`.container[data-title="${win.title}"]`);
+            if (existingContainer) {
+                animateMove(existingContainer);
+            } else {
+                createWindow(win.title, win.content);
+            }
         });
     }
 
@@ -111,9 +112,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function createBio() {
-        document.querySelectorAll('.container[data-title="Bio"]').forEach(el => el.remove());
-
-        createWindow("Bio", `<div class="text-container">Hi! My name is Boris. (,_, )</div>`);
+        const existingBio = document.querySelector('.container[data-title="Bio"]');
+        if (existingBio) {
+            animateMove(existingBio);
+        } else {
+            createWindow("Bio", `<div class="text-container">Hi! My name is Boris. (,_, )</div>`);
+        }
     }
 
     function setupContainer(container) {
@@ -191,13 +195,31 @@ document.addEventListener("DOMContentLoaded", () => {
         keepContainerInBounds(container, randomX, randomY);
     }
 
+    function animateMove(container) {
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+
+        const maxOffsetX = (window.innerWidth - container.offsetWidth) / 4;
+        const maxOffsetY = (window.innerHeight - container.offsetHeight) / 4;
+
+        const newX = centerX - container.offsetWidth / 2 + (Math.random() - 0.5) * 2 * maxOffsetX;
+        const newY = centerY - container.offsetHeight / 2 + (Math.random() - 0.5) * 2 * maxOffsetY;
+
+        container.style.transition = "left 0.5s ease, top 0.5s ease";
+        keepContainerInBounds(container, newX, newY);
+
+        setTimeout(() => {
+            container.style.transition = "";
+        }, 500);
+    }
+
     function initialize3DRenderer(canvas) {
         import("./module.js")
             .then((module) => {
                 if (module.initialize) {
                     module.initialize(canvas);
                 } else {
-                    console.error("Функция initialize не найдена в 3dgs-renderer.js");
+                    console.error("Функция initialize не найдена в module.js");
                 }
             })
             .catch((err) => {
