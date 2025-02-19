@@ -170,13 +170,6 @@ a {
   background-color: rgba(0, 0, 255, 1);
 }
 
-.splat-content {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center; 
-}
-
 .media-content {
   flex: 1;
   display: flex;
@@ -192,7 +185,7 @@ a {
   align-items: top;      
 }
 
-.splat-content canvas {
+.media-content canvas {
   pointer-events: auto;
 }
 
