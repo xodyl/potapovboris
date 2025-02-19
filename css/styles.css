@@ -180,13 +180,11 @@ a {
 }
 
 .splat-content {
-  /* flex: 1; */
-  /* display: flex; */
-  /* justify-content: left; */
   flex: 1;
   display: flex;
   justify-content: center;
-  align-items: center; lign-items: top; 
+  align-items: center; 
+  lign-items: top; 
 }
 
 .media-content {

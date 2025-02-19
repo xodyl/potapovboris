@@ -106,49 +106,49 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function setupResize(container) {
-    const resizeHandle = container.querySelector(".resize-handle");
-    let isResizing = false, startX, startY, startWidth, startHeight;
-
-    // Сохраняем исходные размеры контейнера
-    const initialWidth = container.offsetWidth;
-    const initialHeight = container.offsetHeight;
-
-    resizeHandle.addEventListener("mousedown", (e) => {
-        isResizing = true;
-        startX = e.clientX;
-        startY = e.clientY;
-        startWidth = container.offsetWidth;
-        startHeight = container.offsetHeight;
-
-        function onMouseMove(e) {
-            if (!isResizing) return;
-
-            let newWidth = startWidth - (startX - e.clientX);
-            let newHeight = startHeight - (startY - e.clientY);
-
-            // Ограничиваем изменения в пределах (минимальный размер, начальный размер)
-            if (newWidth >= 150 && newWidth <= initialWidth) {
-                container.style.width = `${newWidth}px`;
-            }
-            if (newHeight >= 100 && newHeight <= initialHeight) {
-                container.style.height = `${newHeight}px`;
-            }
-
-            keepContainerInBounds(container);
-        }
-
-        function onMouseUp() {
-            isResizing = false;
-            document.removeEventListener("mousemove", onMouseMove);
-            document.removeEventListener("mouseup", onMouseUp);
-        }
-
-        document.addEventListener("mousemove", onMouseMove);
-        document.addEventListener("mouseup", onMouseUp);
-    });
-  }
-
+  // function setupResize(container) {
+  //   const resizeHandle = container.querySelector(".resize-handle");
+  //   let isResizing = false, startX, startY, startWidth, startHeight;
+  //
+  //   // Сохраняем исходные размеры контейнера
+  //   const initialWidth = container.offsetWidth;
+  //   const initialHeight = container.offsetHeight;
+  //
+  //   resizeHandle.addEventListener("mousedown", (e) => {
+  //       isResizing = true;
+  //       startX = e.clientX;
+  //       startY = e.clientY;
+  //       startWidth = container.offsetWidth;
+  //       startHeight = container.offsetHeight;
+  //
+  //       function onMouseMove(e) {
+  //           if (!isResizing) return;
+  //
+  //           let newWidth = startWidth - (startX - e.clientX);
+  //           let newHeight = startHeight - (startY - e.clientY);
+  //
+  //           // Ограничиваем изменения в пределах (минимальный размер, начальный размер)
+  //           if (newWidth >= 150 && newWidth <= initialWidth) {
+  //               container.style.width = `${newWidth}px`;
+  //           }
+  //           if (newHeight >= 100 && newHeight <= initialHeight) {
+  //               container.style.height = `${newHeight}px`;
+  //           }
+  //
+  //           keepContainerInBounds(container);
+  //       }
+  //
+  //       function onMouseUp() {
+  //           isResizing = false;
+  //           document.removeEventListener("mousemove", onMouseMove);
+  //           document.removeEventListener("mouseup", onMouseUp);
+  //       }
+  //
+  //       document.addEventListener("mousemove", onMouseMove);
+  //       document.addEventListener("mouseup", onMouseUp);
+  //   });
+  // }
+  //
 
   function keepContainerInBounds(container, x = container.offsetLeft, y = container.offsetTop) {
     const maxX = window.innerWidth - container.offsetWidth;
