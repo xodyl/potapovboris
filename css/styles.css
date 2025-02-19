@@ -7,10 +7,10 @@
 }
 
 
-#canvas {
-    width: 360px; 
-    height: 360px;
-    display: block;
+canvas {
+  width: 360px; 
+  height: 360px;
+  display: block;
 }
 
 body {
