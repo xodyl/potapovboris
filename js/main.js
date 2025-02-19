@@ -108,8 +108,12 @@ document.addEventListener("DOMContentLoaded", () => {
         setupContainer(container);
 
         if (title === "3DGS Render") {
-            const canvas = container.querySelector("#canvas");
-            initialize3DRenderer(canvas);
+            setTimeout(() => {
+                const canvas = container.querySelector("#canvas");
+                if (canvas) {
+                    initialize3DRenderer(canvas);
+                }
+            }, 0);
         }
     }
 
@@ -197,7 +201,11 @@ document.addEventListener("DOMContentLoaded", () => {
     function initialize3DRenderer(canvas) {
         import("./module.js")
             .then((module) => {
-                module.initialize(canvas);
+                if (module.initialize) {
+                    module.initialize(canvas);
+                } else {
+                    console.error("Функция initialize не найдена в 3dgs-renderer.js");
+                }
             })
             .catch((err) => {
                 console.error("Ошибка загрузки 3DGS:", err);
