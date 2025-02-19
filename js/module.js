@@ -13,7 +13,8 @@ async function main() {
     const url = '/potapovboris/out_resize.splat'
     await SPLAT.Loader.LoadAsync(url, scene, () => {});
     const handleResize = () => {
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        const rect = canvas.parentElement.getBoundingClientRect();
+        renderer.setSize(rect.width, rect.height);
     };
 
     const frame = () => {
