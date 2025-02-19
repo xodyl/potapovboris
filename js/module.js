@@ -12,7 +12,7 @@ const controls = new SPLAT.OrbitControls(camera, canvas);
 async function main() {
     const url = '/potapovboris/resize_out.splat'
     await SPLAT.Loader.LoadAsync(url, scene, () => {});
-    scene.reducePointCount(0.5);
+    // scene.reducePointCount(0.5);
     const handleResize = () => {
         const rect = canvas.parentElement.getBoundingClientRect();
         renderer.setSize(rect.width, rect.height);

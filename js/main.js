@@ -61,9 +61,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  window.addEventListener("resize", () => {
-    containers.forEach(adjustOnResize);
-  });
+  // window.addEventListener("resize", () => {
+  //   containers.forEach(adjustOnResize);
+  // });
 
   // Функция для перемещения контейнера на передний план
   function bringContainerToFront(container) {
