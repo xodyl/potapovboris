@@ -33,7 +33,6 @@
         }
         else {
             let background = document.querySelector('.video-bg');
-            // background.style.setProperty('--dur', pos.y * 0.01);
             background.style.filter = `brightness(90%) blur(${pos.y * 0.01}px)`;
         }
     }
@@ -41,128 +40,138 @@
 
 
 document.addEventListener("DOMContentLoaded", () => {
-  const containers = document.querySelectorAll(".container");
+    const worksLink = document.getElementById("works-link"); 
+    const main = document.querySelector('main');
 
-  containers.forEach(container => {
-    setupDrag(container);
-    // setupResize(container);
-    randomizePosition(container);
-    adjustOnResize(container); // Подстроим контейнер по содержимому
+    let zIndexCounter = 1; // Глобальный счетчик z-index
 
-    // Кнопка закрытия
-    const closeButton = container.querySelector(".close-btn");
-    closeButton.addEventListener("click", () => {
-      container.style.display = "none"; // скрыть контейнер
+    // Исходные данные окон
+    const windowData = [
+        {
+            title: "Boris bold rotated head",
+            content: `<video autoplay loop muted playsinline>
+                        <source src="static/0001-0021.webm" type="video/webm">
+                        error..
+                      </video>`
+        },
+        {
+            title: "Boris sketchbook mp4",
+            content: `<video autoplay loop muted playsinline>
+                        <source src="static/sketchbook0001-1173.webm" type="video/webm">
+                        error..
+                      </video>`
+        },
+        {
+            title: "3DGS Render",
+            content: `<canvas id="canvas"></canvas>`
+        },
+        {
+            title: "Bio",
+            content: `<div class="text-container">Hi! My name is Boris. (,_, )</div>`
+        }
+    ];
+
+    function createContainers() {
+        // Удаляем старые контейнеры
+        document.querySelectorAll('.container').forEach(el => el.remove());
+
+        // Создаем новые
+        windowData.forEach(win => {
+            const container = document.createElement("div");
+            container.classList.add("container");
+
+            container.innerHTML = `
+                <div class="header">
+                    <span class="title">${win.title}</span>
+                    <button class="close-btn">x</button>
+                </div>
+                <div class="media-content">${win.content}</div>
+            `;
+
+            main.appendChild(container);
+            setupContainer(container); // Применяем логику к новому контейнеру
+        });
+    }
+
+    function setupContainer(container) {
+        setupDrag(container);
+        randomizePosition(container);
+        adjustOnResize(container);
+
+        // Кнопка закрытия
+        const closeButton = container.querySelector(".close-btn");
+        closeButton.addEventListener("click", () => {
+            container.remove(); // Полностью удаляем контейнер
+        });
+
+        // Выводим контейнер на передний план при клике
+        container.addEventListener("mousedown", () => {
+            bringContainerToFront(container);
+        });
+
+        window.addEventListener("resize", () => adjustOnResize(container));
+    }
+
+    // Функция для перемещения контейнера на передний план
+    function bringContainerToFront(container) {
+        zIndexCounter++; // Увеличиваем глобальный счетчик
+        container.style.zIndex = zIndexCounter;
+    }
+
+    function setupDrag(container) {
+        let offsetX, offsetY, isDragging = false;
+
+        container.addEventListener("mousedown", (e) => {
+            if (e.target.closest(".close-btn")) return; // Игнорируем клик по кнопке закрытия
+
+            bringContainerToFront(container);
+            isDragging = true;
+            offsetX = e.clientX - container.offsetLeft;
+            offsetY = e.clientY - container.offsetTop;
+
+            function onMouseMove(e) {
+                if (!isDragging) return;
+                let newX = e.clientX - offsetX;
+                let newY = e.clientY - offsetY;
+                keepContainerInBounds(container, newX, newY);
+            }
+
+            function onMouseUp() {
+                isDragging = false;
+                document.removeEventListener("mousemove", onMouseMove);
+                document.removeEventListener("mouseup", onMouseUp);
+            }
+
+            document.addEventListener("mousemove", onMouseMove);
+            document.addEventListener("mouseup", onMouseUp);
+        });
+    }
+
+    function keepContainerInBounds(container, x = container.offsetLeft, y = container.offsetTop) {
+        const maxX = window.innerWidth - container.offsetWidth;
+        const maxY = window.innerHeight - container.offsetHeight;
+        container.style.left = `${Math.max(0, Math.min(x, maxX))}px`;
+        container.style.top = `${Math.max(0, Math.min(y, maxY))}px`;
+    }
+
+    function adjustOnResize(container) {
+        keepContainerInBounds(container);
+    }
+
+    function randomizePosition(container) {
+        keepContainerInBounds(container, 
+            Math.random() * (window.innerWidth - container.offsetWidth), 
+            Math.random() * (window.innerHeight - container.offsetHeight)
+        );
+    }
+
+    // Вешаем обработчик на "works"
+    worksLink.addEventListener("click", (event) => {
+        event.preventDefault(); // Чтобы не обновлялась страница
+        createContainers();
     });
 
-    // Добавляем обработчик клика, чтобы при нажатии контейнер выходил на верхний слой
-    container.addEventListener("click", () => {
-      bringContainerToFront(container);
-    });
-  });
-
-  window.addEventListener("resize", () => {
-    containers.forEach(adjustOnResize);
-  });
-
-  // Функция для перемещения контейнера на передний план
-  function bringContainerToFront(container) {
-    containers.forEach(cont => {
-      // Сбросить z-index у всех контейнеров
-      cont.style.zIndex = "";
-    });
-    // Установить наибольший z-index для выбранного контейнера
-    container.style.zIndex = 9999; // Можно установить любое высокое значение
-  }
-
-  function setupDrag(container) {
-    const header = container.querySelector(".header");
-    let offsetX, offsetY, isDragging = false;
-
-    header.addEventListener("mousedown", (e) => {
-      bringContainerToFront(container);
-
-      isDragging = true;
-      offsetX = e.clientX - container.offsetLeft;
-      offsetY = e.clientY - container.offsetTop;
-
-      function onMouseMove(e) {
-        if (!isDragging) return;
-
-        let newX = e.clientX - offsetX;
-        let newY = e.clientY - offsetY;
-        keepContainerInBounds(container, newX, newY);
-      }
-
-      function onMouseUp() {
-        isDragging = false;
-        document.removeEventListener("mousemove", onMouseMove);
-        document.removeEventListener("mouseup", onMouseUp);
-      }
-
-      document.addEventListener("mousemove", onMouseMove);
-      document.addEventListener("mouseup", onMouseUp);
-    });
-  }
-
-  // function setupResize(container) {
-  //   const resizeHandle = container.querySelector(".resize-handle");
-  //   let isResizing = false, startX, startY, startWidth, startHeight;
-  //
-  //   // Сохраняем исходные размеры контейнера
-  //   const initialWidth = container.offsetWidth;
-  //   const initialHeight = container.offsetHeight;
-  //
-  //   resizeHandle.addEventListener("mousedown", (e) => {
-  //       isResizing = true;
-  //       startX = e.clientX;
-  //       startY = e.clientY;
-  //       startWidth = container.offsetWidth;
-  //       startHeight = container.offsetHeight;
-  //
-  //       function onMouseMove(e) {
-  //           if (!isResizing) return;
-  //
-  //           let newWidth = startWidth - (startX - e.clientX);
-  //           let newHeight = startHeight - (startY - e.clientY);
-  //
-  //           // Ограничиваем изменения в пределах (минимальный размер, начальный размер)
-  //           if (newWidth >= 150 && newWidth <= initialWidth) {
-  //               container.style.width = `${newWidth}px`;
-  //           }
-  //           if (newHeight >= 100 && newHeight <= initialHeight) {
-  //               container.style.height = `${newHeight}px`;
-  //           }
-  //
-  //           keepContainerInBounds(container);
-  //       }
-  //
-  //       function onMouseUp() {
-  //           isResizing = false;
-  //           document.removeEventListener("mousemove", onMouseMove);
-  //           document.removeEventListener("mouseup", onMouseUp);
-  //       }
-  //
-  //       document.addEventListener("mousemove", onMouseMove);
-  //       document.addEventListener("mouseup", onMouseUp);
-  //   });
-  // }
-  //
-
-  function keepContainerInBounds(container, x = container.offsetLeft, y = container.offsetTop) {
-    const maxX = window.innerWidth - container.offsetWidth;
-    const maxY = window.innerHeight - container.offsetHeight;
-
-    container.style.left = `${Math.max(0, Math.min(x, maxX))}px`;
-    container.style.top = `${Math.max(0, Math.min(y, maxY))}px`;
-  }
-
-  function adjustOnResize(container) {
-    keepContainerInBounds(container);
-    // adjustContainerSize(container, false); // Убираем автоматическую подстройку размера при ресайзе окна
-  }
-
-  function randomizePosition(container) {
-    keepContainerInBounds(container, Math.random() * (window.innerWidth - container.offsetWidth), Math.random() * (window.innerHeight - container.offsetHeight));
-  }
+    // Создаем окна при первой загрузке
+    createContainers();
 });
+
