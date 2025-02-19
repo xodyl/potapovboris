@@ -17,11 +17,11 @@ async function main() {
         renderer.setSize(rect.width, rect.height);
     };
 
-    const resizeObserver = new ResizeObserver(() => {
-        handleResize();
-    });
-
-    resizeObserver.observe(canvas.parentElement);
+    // const resizeObserver = new ResizeObserver(() => {
+    //     handleResize();
+    // });
+    //
+    // resizeObserver.observe(canvas.parentElement);
 
     const frame = () => {
         controls.update();
