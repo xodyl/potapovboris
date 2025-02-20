@@ -92,6 +92,15 @@ document.addEventListener("DOMContentLoaded", () => {
         container.classList.add("container");
         container.setAttribute("data-title", title);
 
+        if (title === "3DGS Render"){
+        container.innerHTML = `
+            <div class="header">
+                <span class="title">${title}</span>
+                <button class="close-btn">x</button>
+            </div>
+            ${content}
+        `;
+        }else{
         container.innerHTML = `
             <div class="header">
                 <span class="title">${title}</span>
@@ -99,7 +108,8 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
             <div class="media-content">${content}</div>
         `;
-
+        }
+        
         main.appendChild(container);
         setupContainer(container);
 
