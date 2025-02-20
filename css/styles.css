@@ -7,9 +7,9 @@
 }
 
 canvas {
-  width: 100vw; 
-  height: 100vh;
-  display: block; 
+  width: auto; 
+  height: auto;
+  /* display: block;  */
 }
 
 header {
