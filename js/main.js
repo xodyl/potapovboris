@@ -288,8 +288,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function initialize3DRenderer(canvas) {
-        canvas.width = 240;
-        canvas.height = 240;
 
         import("./module.js")
             .then((module) => {
