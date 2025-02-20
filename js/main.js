@@ -148,6 +148,11 @@ document.addEventListener("DOMContentLoaded", () => {
             prevContainer = activeContainer; 
             activeContainer = container; 
         });
+
+        const canvas = container.querySelector("canvas");
+        if (canvas) {
+            window.addEventListener("resize", () => resizeCanvas(canvas));
+        }
     }
 
     function bringContainerToFront(container) {
@@ -287,31 +292,23 @@ document.addEventListener("DOMContentLoaded", () => {
         }, moveDuration * 1000);
     }
 
-    function initialize3DRenderer(canvas) {
-        function resizeCanvas() {
-            canvas.width = canvas.clientWidth;
-            canvas.height = canvas.clientHeight;
+    function resizeCanvas(canvas) {
+        // Обновляем размеры канваса
+        canvas.width = canvas.clientWidth;
+        canvas.height = canvas.clientHeight;
 
-            // Перезапускаем рендер после изменения размеров
-            import("./module.js")
-                .then((module) => {
-                    if (module.initialize) {
-                        module.initialize(canvas);
-                    } else {
-                        console.error("Функция initialize не найдена в module.js");
-                    }
-                })
-                .catch((err) => {
-                    console.error("Ошибка загрузки 3DGS:", err);
-                });
-        }
-
-        // Устанавливаем начальный размер
-        resizeCanvas();
-
-        // Следим за изменением размеров контейнера
-        const observer = new ResizeObserver(resizeCanvas);
-        observer.observe(canvas.parentElement);
+        // Перезапуск рендера
+        import("./module.js")
+            .then((module) => {
+                if (module.initialize) {
+                    module.initialize(canvas); // Перезапускаем рендер
+                } else {
+                    console.error("Функция initialize не найдена в module.js");
+                }
+            })
+            .catch((err) => {
+                console.error("Ошибка загрузки 3DGS:", err);
+            });
     }
 
     worksLink.addEventListener("click", (event) => {
