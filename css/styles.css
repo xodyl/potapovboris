@@ -7,12 +7,9 @@
 }
 
 canvas {
-  width: auto; 
-  height: auto;
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100vw; 
+  height: 100vh;
+  display: block; 
 }
 
 header {
