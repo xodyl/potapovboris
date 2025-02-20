@@ -74,6 +74,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     ];
 
+    let activeContainer = null;
+
     function createContainers() {
         windowData.forEach(win => {
             const existingContainer = document.querySelector(`.container[data-title="${win.title}"]`);
@@ -120,6 +122,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    let prevContainer = null; // Добавим переменную для хранения предыдущего окна
+
     function setupContainer(container) {
         setupDrag(container);
         randomizePosition(container);
@@ -135,7 +139,19 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         window.addEventListener("resize", () => adjustOnResize(container));
+
+        container.addEventListener("dblclick", () => {
+            if (prevContainer && prevContainer !== container) {
+                resetContainerPosition(prevContainer); // Возвращаем предыдущее окно в исходное положение
+            }
+
+            animateMoveToCenter(container);
+             // Запускаем анимацию для текущего окна
+            prevContainer = activeContainer; // Обновляем предыдущее окно
+            activeContainer = container; // Обновляем активное окно
+        });
     }
+
 
     function bringContainerToFront(container) {
         zIndexCounter++;
@@ -211,6 +227,89 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
             container.style.transition = "";
         }, 500);
+    }
+
+    let initialWidth = null;
+    let initialHeight = null;
+    let initialPosition = null;
+
+    function animateMoveToCenter(container) {
+        const containerRect = container.getBoundingClientRect();
+        const windowCenter = {
+            x: window.innerWidth / 2,
+            y: window.innerHeight / 2
+        };
+
+        // Проверяем, увеличено ли окно
+        const isMaximized = container.offsetWidth === 480 && container.offsetHeight === 480;
+
+        if (!isMaximized) {
+
+            initialWidth = container.offsetWidth;
+            initialHeight = container.offsetHeight;
+            initialPosition = { x: container.offsetLeft, y: container.offsetTop };
+        
+            // Если окно не увеличено, увеличиваем его
+            const moveDuration = 1; // время анимации (сек)
+            const easing = "ease"; // плавность
+
+            container.style.transition = `width ${moveDuration}s ${easing}, height ${moveDuration}s ${easing}, left ${moveDuration}s ${easing}, top ${moveDuration}s ${easing}`;
+            container.style.width = `480px`;
+            container.style.height = `480px`;
+
+            // Для увеличения окна, передвигаем его к центру экрана
+            const offsetX = (window.innerWidth - 480) / 2;
+            const offsetY = (window.innerHeight - 480) / 2;
+
+            container.style.left = `${offsetX}px`;
+            container.style.top = `${offsetY}px`;
+
+            // Устанавливаем этот контейнер как активный
+            activeContainer = container;
+
+            setTimeout(() => {
+                container.style.transition = ""; // сбрасываем анимацию
+            }, moveDuration * 1000);
+        } else {
+            // Если окно уже увеличено, восстанавливаем исходные размеры и позицию
+            const moveDuration = 1; // время анимации (сек)
+            const easing = "ease"; // плавность
+
+            container.style.transition = `width ${moveDuration}s ${easing}, height ${moveDuration}s ${easing}, left ${moveDuration}s ${easing}, top ${moveDuration}s ${easing}`;
+            container.style.width = `${initialWidth}px`;
+            container.style.height = `${initialHeight}px`;
+
+            // Для уменьшения окна, передвигаем его от центра экрана к исходной позиции
+            const offsetX = initialPosition.x;
+            const offsetY = initialPosition.y;
+
+            container.style.left = `${offsetX}px`;
+            container.style.top = `${offsetY}px`;
+
+            setTimeout(() => {
+                container.style.transition = ""; // сбрасываем анимацию
+            }, moveDuration * 1000);
+        }
+    }
+
+    function resetContainerPosition(container) {
+        const moveDuration = 1; // время анимации (сек)
+            const easing = "ease"; // плавность
+
+            container.style.transition = `width ${moveDuration}s ${easing}, height ${moveDuration}s ${easing}, left ${moveDuration}s ${easing}, top ${moveDuration}s ${easing}`;
+            container.style.width = `${initialWidth}px`;
+            container.style.height = `${initialHeight}px`;
+
+            // Для уменьшения окна, передвигаем его от центра экрана к исходной позиции
+            const offsetX = initialPosition.x;
+            const offsetY = initialPosition.y;
+
+            container.style.left = `${offsetX}px`;
+            container.style.top = `${offsetY}px`;
+
+            setTimeout(() => {
+                container.style.transition = ""; // сбрасываем анимацию
+            }, moveDuration * 1000);
     }
 
     function initialize3DRenderer(canvas) {
