@@ -288,18 +288,30 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function initialize3DRenderer(canvas) {
+        function resizeCanvas() {
+            canvas.width = canvas.clientWidth;
+            canvas.height = canvas.clientHeight;
 
-        import("./module.js")
-            .then((module) => {
-                if (module.initialize) {
-                    module.initialize(canvas);
-                } else {
-                    console.error("Функция initialize не найдена в module.js");
-                }
-            })
-            .catch((err) => {
-                console.error("Ошибка загрузки 3DGS:", err);
-            });
+            // Перезапускаем рендер после изменения размеров
+            import("./module.js")
+                .then((module) => {
+                    if (module.initialize) {
+                        module.initialize(canvas);
+                    } else {
+                        console.error("Функция initialize не найдена в module.js");
+                    }
+                })
+                .catch((err) => {
+                    console.error("Ошибка загрузки 3DGS:", err);
+                });
+        }
+
+        // Устанавливаем начальный размер
+        resizeCanvas();
+
+        // Следим за изменением размеров контейнера
+        const observer = new ResizeObserver(resizeCanvas);
+        observer.observe(canvas.parentElement);
     }
 
     worksLink.addEventListener("click", (event) => {
