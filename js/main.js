@@ -147,12 +147,11 @@ document.addEventListener("DOMContentLoaded", () => {
             animateMoveToCenter(container);
             prevContainer = activeContainer; 
             activeContainer = container; 
+            const canvas = container.querySelector("canvas");
+            if (canvas) {
+                window.addEventListener("resize", () => resizeCanvas(canvas));
+            }
         });
-
-        const canvas = container.querySelector("canvas");
-        if (canvas) {
-            window.addEventListener("resize", () => resizeCanvas(canvas));
-        }
     }
 
     function bringContainerToFront(container) {
