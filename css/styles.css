@@ -9,10 +9,10 @@
 canvas {
   width: auto; 
   height: auto;
-  /* flex: 1; */
-  /* display: flex; */
-  /* justify-content: center; */
-  /* align-items: center; */
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 header {
@@ -142,8 +142,6 @@ a {
 }
 
 .container {
-  /* transition: all 0.3s ease-in-out; */
-  /* transition: width 0.5s ease, height 0.5s ease, left 0.5s ease, top 0.5s ease; */
   position: absolute;
   width: auto;  
   height: auto; 

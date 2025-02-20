@@ -335,15 +335,6 @@ document.addEventListener("DOMContentLoaded", () => {
             container.style.left = `${offsetX}px`;
             container.style.top = `${offsetY}px`;
 
-            if (title === "3DGS Render") {
-                setTimeout(() => {
-                    const canvas = container.querySelector("#canvas");
-                    if (canvas) {
-                        initialize3DRenderer(canvas);
-                    }
-                }, 0);
-            }
-
             setTimeout(() => {
                 container.style.transition = ""; // сбрасываем анимацию
             }, moveDuration * 1000);
