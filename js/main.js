@@ -92,7 +92,6 @@ document.addEventListener("DOMContentLoaded", () => {
         container.classList.add("container");
         container.setAttribute("data-title", title);
 
-        // Добавляем хедер с кнопкой
         container.innerHTML = `
             <div class="header">
                 <span class="title">${title}</span>
@@ -100,7 +99,6 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
         `;
 
-        // Создаем канвас только для "3DGS Render", добавляем его в контейнер напрямую
         if (title === "3DGS Render") {
             const canvas = document.createElement("canvas");
             canvas.id = "canvas";
@@ -109,7 +107,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 initialize3DRenderer(canvas); // Инициализация рендера
             }, 0);
         } else {
-            // Для других типов контента оставляем старую логику
             const mediaContent = document.createElement("div");
             mediaContent.classList.add("media-content");
             mediaContent.innerHTML = content;
@@ -147,11 +144,14 @@ document.addEventListener("DOMContentLoaded", () => {
             animateMoveToCenter(container);
             prevContainer = activeContainer; 
             activeContainer = container; 
-            const canvas = container.querySelector("canvas");
-            if (canvas) {
-                window.addEventListener("resize", () => initialize3DRenderer(canvas));
-            }
         });
+        const canvas = container.querySelector("canvas");
+        if (canvas) {
+            const resizeObserver = new ResizeObserver(() => {
+                resizeCanvas(canvas);
+            });
+            resizeObserver.observe(container); // Наблюдаем за изменениями размера контейнера
+        }
     }
 
     function bringContainerToFront(container) {
