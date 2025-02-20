@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
             activeContainer = container; 
             const canvas = container.querySelector("canvas");
             if (canvas) {
-                window.addEventListener("resize", () => resizeCanvas(canvas));
+                window.addEventListener("resize", () => initialize3DRenderer(canvas));
             }
         });
     }
@@ -291,7 +291,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, moveDuration * 1000);
     }
 
-    function resizeCanvas(canvas) {
+    function (canvas) {
         // Обновляем размеры канваса
         canvas.width = canvas.clientWidth;
         canvas.height = canvas.clientHeight;
