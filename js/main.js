@@ -117,10 +117,6 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
                 const canvas = container.querySelector("#canvas");
                 if (canvas) {
-                    // const gl = canvas.getContext("webgl") || canvas.getContext("2d");
-                    // if (gl) gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-                    // canvas.width = container.clientWidth;
-                    // canvas.height = container.clientHeight;
                     initialize3DRenderer(canvas);
                 }
             }, 0);
@@ -283,16 +279,12 @@ document.addEventListener("DOMContentLoaded", () => {
             activeContainer = container;
 
             if (title === "3DGS Render") {
-                setTimeout(() => {
-                    const canvas = container.querySelector("#canvas");
-                    if (canvas) {
-                        // const gl = canvas.getContext("webgl") || canvas.getContext("2d");
-                        // if (gl) gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-                        // canvas.width = container.clientWidth;
-                        // canvas.height = container.clientHeight;
-                        initialize3DRenderer(canvas);
-                    }
-                }, 0);
+            setTimeout(() => {
+                const canvas = container.querySelector("#canvas");
+                if (canvas) {
+                    initialize3DRenderer(canvas);
+                }
+            }, 0);
             }
 
             setTimeout(() => {
@@ -315,17 +307,13 @@ document.addEventListener("DOMContentLoaded", () => {
             container.style.top = `${offsetY}px`;
 
             if (title === "3DGS Render") {
-                setTimeout(() => {
-                    const canvas = container.querySelector("#canvas");
-                    if (canvas) {
-                        // const gl = canvas.getContext("webgl") || canvas.getContext("2d");
-                        // if (gl) gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-                        // canvas.width = container.clientWidth;
-                        // canvas.height = container.clientHeight;
-                        initialize3DRenderer(canvas);
-                    }
-                }, 0);
-            }
+            setTimeout(() => {
+                const canvas = container.querySelector("#canvas");
+                if (canvas) {
+                    initialize3DRenderer(canvas);
+                }
+            }, 0);
+        }
             setTimeout(() => {
                 container.style.transition = ""; // сбрасываем анимацию
             }, moveDuration * 1000);
