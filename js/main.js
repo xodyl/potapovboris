@@ -92,47 +92,36 @@ document.addEventListener("DOMContentLoaded", () => {
         container.classList.add("container");
         container.setAttribute("data-title", title);
 
-        if (title === "3DGS Render"){
+        // Добавляем хедер с кнопкой
         container.innerHTML = `
             <div class="header">
                 <span class="title">${title}</span>
                 <button class="close-btn">x</button>
             </div>
-            ${content}
         `;
-        }else{
-        container.innerHTML = `
-            <div class="header">
-                <span class="title">${title}</span>
-                <button class="close-btn">x</button>
-            </div>
-            <div class="media-content">${content}</div>
-        `;
+
+        // Создаем канвас только для "3DGS Render", добавляем его в контейнер напрямую
+        if (title === "3DGS Render") {
+            const canvas = document.createElement("canvas");
+            canvas.id = "canvas";
+            container.appendChild(canvas); // Добавляем канвас прямо в контейнер
+            setTimeout(() => {
+                initialize3DRenderer(canvas); // Инициализация рендера
+            }, 0);
+        } else {
+            // Для других типов контента оставляем старую логику
+            const mediaContent = document.createElement("div");
+            mediaContent.classList.add("media-content");
+            mediaContent.innerHTML = content;
+            container.appendChild(mediaContent);
         }
-        
+
         main.appendChild(container);
         setupContainer(container);
-
-        if (title === "3DGS Render") {
-            setTimeout(() => {
-                const canvas = container.querySelector("#canvas");
-                if (canvas) {
-                    initialize3DRenderer(canvas);
-                }
-            }, 0);
-        }
     }
 
-    function createBio() {
-        const existingBio = document.querySelector('.container[data-title="Bio"]');
-        if (existingBio) {
-            animateMove(existingBio);
-        } else {
-            createWindow("Bio", `<div class="text-container">Hi! My name is Boris. (,_, )</div>`);
-        }
-    }
 
-    let prevContainer = null; // Добавим переменную для хранения предыдущего окна
+    let prevContainer = null; 
 
     function setupContainer(container) {
         setupDrag(container);
@@ -152,16 +141,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         container.addEventListener("dblclick", () => {
             if (prevContainer && prevContainer !== container) {
-                resetContainerPosition(prevContainer); // Возвращаем предыдущее окно в исходное положение
+                resetContainerPosition(prevContainer); 
             }
 
             animateMoveToCenter(container);
-             // Запускаем анимацию для текущего окна
-            prevContainer = activeContainer; // Обновляем предыдущее окно
-            activeContainer = container; // Обновляем активное окно
+            prevContainer = activeContainer; 
+            activeContainer = container; 
         });
     }
-
 
     function bringContainerToFront(container) {
         zIndexCounter++;
@@ -251,93 +238,53 @@ document.addEventListener("DOMContentLoaded", () => {
             y: window.innerHeight / 2
         };
 
-        // Проверяем, увеличено ли окно
         const isMaximized = container.offsetWidth === 480 && container.offsetHeight === 480;
 
         if (!isMaximized) {
-
             initialWidth = container.offsetWidth;
             initialHeight = container.offsetHeight;
             initialPosition = { x: container.offsetLeft, y: container.offsetTop };
         
-            // Если окно не увеличено, увеличиваем его
-            const moveDuration = 1; // время анимации (сек)
-            const easing = "ease"; // плавность
+            const moveDuration = 1; 
+            const easing = "ease"; 
 
             container.style.transition = `width ${moveDuration}s ${easing}, height ${moveDuration}s ${easing}, left ${moveDuration}s ${easing}, top ${moveDuration}s ${easing}`;
             container.style.width = `480px`;
             container.style.height = `480px`;
 
-            // Для увеличения окна, передвигаем его к центру экрана
             const offsetX = (window.innerWidth - 480) / 2;
             const offsetY = (window.innerHeight - 480) / 2;
 
             container.style.left = `${offsetX}px`;
             container.style.top = `${offsetY}px`;
 
-            // Устанавливаем этот контейнер как активный
             activeContainer = container;
 
-            if (title === "3DGS Render") {
             setTimeout(() => {
-                const canvas = container.querySelector("#canvas");
-                if (canvas) {
-                    initialize3DRenderer(canvas);
-                }
-            }, 0);
-            }
-
-            setTimeout(() => {
-                container.style.transition = ""; // сбрасываем анимацию
+                container.style.transition = ""; 
             }, moveDuration * 1000);
         } else {
-            // Если окно уже увеличено, восстанавливаем исходные размеры и позицию
-            const moveDuration = 1; // время анимации (сек)
-            const easing = "ease"; // плавность
-
-            container.style.transition = `width ${moveDuration}s ${easing}, height ${moveDuration}s ${easing}, left ${moveDuration}s ${easing}, top ${moveDuration}s ${easing}`;
-            container.style.width = `${initialWidth}px`;
-            container.style.height = `${initialHeight}px`;
-
-            // Для уменьшения окна, передвигаем его от центра экрана к исходной позиции
-            const offsetX = initialPosition.x;
-            const offsetY = initialPosition.y;
-
-            container.style.left = `${offsetX}px`;
-            container.style.top = `${offsetY}px`;
-
-            if (title === "3DGS Render") {
-            setTimeout(() => {
-                const canvas = container.querySelector("#canvas");
-                if (canvas) {
-                    initialize3DRenderer(canvas);
-                }
-            }, 0);
-        }
-            setTimeout(() => {
-                container.style.transition = ""; // сбрасываем анимацию
-            }, moveDuration * 1000);
+            resetContainerPosition(container);
         }
     }
 
     function resetContainerPosition(container) {
-        const moveDuration = 1; // время анимации (сек)
-            const easing = "ease"; // плавность
+        const moveDuration = 1; 
+        const easing = "ease"; 
 
-            container.style.transition = `width ${moveDuration}s ${easing}, height ${moveDuration}s ${easing}, left ${moveDuration}s ${easing}, top ${moveDuration}s ${easing}`;
-            container.style.width = `${initialWidth}px`;
-            container.style.height = `${initialHeight}px`;
+        container.style.transition = `width ${moveDuration}s ${easing}, height ${moveDuration}s ${easing}, left ${moveDuration}s ${easing}, top ${moveDuration}s ${easing}`;
+        container.style.width = `${initialWidth}px`;
+        container.style.height = `${initialHeight}px`;
 
-            // Для уменьшения окна, передвигаем его от центра экрана к исходной позиции
-            const offsetX = initialPosition.x;
-            const offsetY = initialPosition.y;
+        const offsetX = initialPosition.x;
+        const offsetY = initialPosition.y;
 
-            container.style.left = `${offsetX}px`;
-            container.style.top = `${offsetY}px`;
+        container.style.left = `${offsetX}px`;
+        container.style.top = `${offsetY}px`;
 
-            setTimeout(() => {
-                container.style.transition = ""; // сбрасываем анимацию
-            }, moveDuration * 1000);
+        setTimeout(() => {
+            container.style.transition = ""; 
+        }, moveDuration * 1000);
     }
 
     function initialize3DRenderer(canvas) {
@@ -366,4 +313,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
     createContainers();
 });
-
