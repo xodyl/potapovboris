@@ -291,7 +291,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, moveDuration * 1000);
     }
 
-    function (canvas) {
+    function initialize3DRenderer(canvas) {
         // Обновляем размеры канваса
         canvas.width = canvas.clientWidth;
         canvas.height = canvas.clientHeight;
