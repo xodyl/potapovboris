@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const canvas = container.querySelector("canvas");
         if (canvas) {
             const resizeObserver = new ResizeObserver(() => {
-                resizeCanvas(canvas);
+                initialize3DRenderer(canvas);
             });
             resizeObserver.observe(container); // Наблюдаем за изменениями размера контейнера
         }
