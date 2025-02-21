@@ -1,3 +1,8 @@
+function toggleTag(element) {
+    element.classList.toggle("active");
+}
+
+
 (function() {
     var mousePos;
 
@@ -102,9 +107,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (title === "3DGS Render") {
             const canvas = document.createElement("canvas");
             canvas.id = "canvas";
-            container.appendChild(canvas); // Добавляем канвас прямо в контейнер
+            container.appendChild(canvas);
             setTimeout(() => {
-                initialize3DRenderer(canvas); // Инициализация рендера
+                initialize3DRenderer(canvas);
             }, 0);
         } else {
             const mediaContent = document.createElement("div");
@@ -116,7 +121,6 @@ document.addEventListener("DOMContentLoaded", () => {
         main.appendChild(container);
         setupContainer(container);
     }
-
 
     let prevContainer = null; 
 
@@ -144,15 +148,12 @@ document.addEventListener("DOMContentLoaded", () => {
             animateMoveToCenter(container);
             prevContainer = activeContainer; 
             activeContainer = container; 
-            initialize3DRenderer(canvas);
+
+            const canvas = container.querySelector("canvas");
+            if (canvas) {
+                initialize3DRenderer(canvas);
+            }        
         });
-        // const canvas = container.querySelector("canvas");
-        // if (canvas) {
-        //     const resizeObserver = new ResizeObserver(() => {
-        //         initialize3DRenderer(canvas);
-        //     });
-        //     resizeObserver.observe(container); // Наблюдаем за изменениями размера контейнера
-        // }
     }
 
     function bringContainerToFront(container) {
@@ -228,7 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         setTimeout(() => {
             container.style.transition = "";
-        }, 500);
+        }, 250);
     }
 
     let initialWidth = null;
@@ -250,7 +251,7 @@ document.addEventListener("DOMContentLoaded", () => {
             initialHeight = container.offsetHeight;
             initialPosition = { x: container.offsetLeft, y: container.offsetTop };
         
-            const moveDuration = 1; 
+            const moveDuration = 0.25; 
             const easing = "ease"; 
 
             container.style.transition = `width ${moveDuration}s ${easing}, height ${moveDuration}s ${easing}, left ${moveDuration}s ${easing}, top ${moveDuration}s ${easing}`;
@@ -264,6 +265,11 @@ document.addEventListener("DOMContentLoaded", () => {
             container.style.top = `${offsetY}px`;
 
             activeContainer = container;
+            
+            const canvas = container.querySelector("canvas");
+            if (canvas) {
+                initialize3DRenderer(canvas);
+            }
 
             setTimeout(() => {
                 container.style.transition = ""; 
@@ -274,7 +280,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function resetContainerPosition(container) {
-        const moveDuration = 1; 
+        const moveDuration = 0.25; 
         const easing = "ease"; 
 
         container.style.transition = `width ${moveDuration}s ${easing}, height ${moveDuration}s ${easing}, left ${moveDuration}s ${easing}, top ${moveDuration}s ${easing}`;
@@ -286,6 +292,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         container.style.left = `${offsetX}px`;
         container.style.top = `${offsetY}px`;
+
+        const canvas = container.querySelector("canvas");
+        if (canvas) {
+            initialize3DRenderer(canvas);
+        }
 
         setTimeout(() => {
             container.style.transition = ""; 
