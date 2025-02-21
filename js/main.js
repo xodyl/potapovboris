@@ -144,14 +144,15 @@ document.addEventListener("DOMContentLoaded", () => {
             animateMoveToCenter(container);
             prevContainer = activeContainer; 
             activeContainer = container; 
+            initialize3DRenderer(canvas);
         });
-        const canvas = container.querySelector("canvas");
-        if (canvas) {
-            const resizeObserver = new ResizeObserver(() => {
-                initialize3DRenderer(canvas);
-            });
-            resizeObserver.observe(container); // Наблюдаем за изменениями размера контейнера
-        }
+        // const canvas = container.querySelector("canvas");
+        // if (canvas) {
+        //     const resizeObserver = new ResizeObserver(() => {
+        //         initialize3DRenderer(canvas);
+        //     });
+        //     resizeObserver.observe(container); // Наблюдаем за изменениями размера контейнера
+        // }
     }
 
     function bringContainerToFront(container) {
