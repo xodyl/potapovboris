@@ -1,8 +1,3 @@
-function toggleTag(element) {
-    element.classList.toggle("active");
-}
-
-
 (function() {
     var mousePos;
 
@@ -51,9 +46,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let zIndexCounter = 1;
 
-    const windowData = [
+    
+
+     const windowData = [
         {
             title: "Bold rotated head",
+            tags: ["animations"],
             content: `<video autoplay loop muted playsinline>
                         <source src="static/0001-0021.webm" type="video/webm">
                         error..
@@ -61,6 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             title: "Boris tag",
+            tags: ["animations"],
             content: `<video autoplay loop muted playsinline>
                         <source src="static/boris_tag0001-0013.webm" type="video/webm">
                         error..
@@ -68,6 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             title: "Aphex demon",
+            tags: ["animations"],
             content: `<video autoplay loop muted playsinline>
                         <source src="static/demon0001-0022.webm" type="video/webm">
                         error..
@@ -75,9 +75,74 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             title: "3DGS Render",
+            tags: ["3DGS"],
             content: `<canvas id="canvas"></canvas>`
+        },
+        {
+            title: "Bio",
+            tags: [], 
+            content: `<div class="text-container">Hi! My name is Boris. (,_, )</div>`
         }
     ];
+
+    const tags = ["all", "drawings", "music", "3DGS", "posts", "animations"];
+    const tagContainer = document.getElementById("header-tag-container");
+
+    tags.forEach(tag => {
+        const span = document.createElement("span");
+        span.className = "header-tag";
+        span.textContent = tag;
+        span.onclick = () => toggleTag(span);
+        tagContainer.appendChild(span);
+    });
+
+    const tag_all = document.querySelectorAll(".header-tag")[0];
+    tag_all.classList.add("active");
+
+    function toggleTag(element) {
+        const isAll = element.textContent === "all";
+        const tags = document.querySelectorAll(".header-tag");
+        
+        if (isAll) {
+            tags.forEach(tag => tag.classList.remove("active"));
+            element.classList.add("active");
+            filterContainers();
+        } else {
+            document.querySelector(".header-tag:nth-child(1)").classList.remove("active");
+            element.classList.toggle("active");
+            filterContainers(); 
+        }
+
+        if (![...tags].some(tag => tag !== tags[0] && tag.classList.contains("active"))) {
+            tags[0].classList.add("active");
+        }
+
+    filterContainers();
+
+    }
+
+    function filterContainers() {
+        const activeTags = Array.from(document.querySelectorAll(".header-tag.active"))
+                                 .map(tag => tag.textContent.toLowerCase());
+        const containers = document.querySelectorAll(".container");
+
+        if (activeTags.includes("all")) {
+            containers.forEach(container => {
+                container.style.display = "block";
+            });
+            return;
+        }
+
+        containers.forEach(container => {
+            const containerTags = container.dataset.tags ? container.dataset.tags.split(",").map(tag => tag.toLowerCase()) : [];
+            console.log("C Tags:", containerTags); // Проверяем, какие теги выбраны
+            if (activeTags.some(tag => containerTags.includes(tag))) {
+                container.style.display = "block";
+            } else {
+                container.style.display = "none";
+            }
+        });
+    }
 
     let activeContainer = null;
 
@@ -92,10 +157,26 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    function createBio() {
+        const existingBio = document.querySelector('.container[data-title="Bio"]');
+        if (existingBio) {
+            animateMove(existingBio);
+            bringContainerToFront(existingBio);
+        } else {
+            const bioData = windowData.find(win => win.title === "Bio");
+            createWindow(bioData.title, bioData.content);
+            bringContainerToFront(existingBio);
+        }
+    }
+
     function createWindow(title, content) {
         const container = document.createElement("div");
         container.classList.add("container");
         container.setAttribute("data-title", title);
+
+        // Найти теги для данного окна
+        const windowTags = windowData.find(win => win.title === title)?.tags || [];
+        container.dataset.tags = windowTags.join(",");
 
         container.innerHTML = `
             <div class="header">
@@ -117,6 +198,17 @@ document.addEventListener("DOMContentLoaded", () => {
             mediaContent.innerHTML = content;
             container.appendChild(mediaContent);
         }
+
+        const tagsContainer = document.createElement("div");
+        tagsContainer.classList.add("tags-container");
+
+        windowTags.forEach(tag => {
+            const tagElement = document.createElement("span");
+            tagElement.className = "tag";
+            tagElement.textContent = tag;
+            tagsContainer.appendChild(tagElement);
+        });
+        container.appendChild(tagsContainer);
 
         main.appendChild(container);
         setupContainer(container);
@@ -229,7 +321,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         setTimeout(() => {
             container.style.transition = "";
-        }, 250);
+        }, 500);
     }
 
     let initialWidth = null;
@@ -251,7 +343,7 @@ document.addEventListener("DOMContentLoaded", () => {
             initialHeight = container.offsetHeight;
             initialPosition = { x: container.offsetLeft, y: container.offsetTop };
         
-            const moveDuration = 0.25; 
+            const moveDuration = 0.5; 
             const easing = "ease"; 
 
             container.style.transition = `width ${moveDuration}s ${easing}, height ${moveDuration}s ${easing}, left ${moveDuration}s ${easing}, top ${moveDuration}s ${easing}`;
@@ -280,7 +372,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function resetContainerPosition(container) {
-        const moveDuration = 0.25; 
+        const moveDuration = 0.5; 
         const easing = "ease"; 
 
         container.style.transition = `width ${moveDuration}s ${easing}, height ${moveDuration}s ${easing}, left ${moveDuration}s ${easing}, top ${moveDuration}s ${easing}`;
