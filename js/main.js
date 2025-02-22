@@ -123,23 +123,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function filterContainers() {
         const activeTags = Array.from(document.querySelectorAll(".header-tag.active"))
-                                 .map(tag => tag.textContent.toLowerCase());
-        const containers = document.querySelectorAll(".container");
+            .map(tag => tag.textContent.toLowerCase());
 
-        if (activeTags.includes("all")) {
-            containers.forEach(container => {
-                container.style.display = "block";
-            });
-            return;
-        }
+        const existingContainers = document.querySelectorAll(".container");
 
-        containers.forEach(container => {
-            const containerTags = container.dataset.tags ? container.dataset.tags.split(",").map(tag => tag.toLowerCase()) : [];
-            console.log("C Tags:", containerTags); // Проверяем, какие теги выбраны
-            if (activeTags.some(tag => containerTags.includes(tag))) {
-                container.style.display = "block";
+        existingContainers.forEach(container => {
+            const title = container.getAttribute("data-title");
+            const containerData = windowData.find(win => win.title === title);
+            
+            if (!containerData) {
+                container.remove(); 
+                return;
+            }
+
+            const containerTags = containerData.tags.map(tag => tag.toLowerCase());
+
+            if (activeTags.includes("all") || activeTags.some(tag => containerTags.includes(tag))) {
+                // Контейнер уже есть, ничего не делаем
             } else {
-                container.style.display = "none";
+                container.remove(); 
+            }
+        });
+
+        windowData.forEach(win => {
+            const containerExists = document.querySelector(`.container[data-title="${win.title}"]`);
+            const containerTags = win.tags.map(tag => tag.toLowerCase());
+
+            if (!containerExists && (activeTags.includes("all") || activeTags.some(tag => containerTags.includes(tag)))) {
+                createWindow(win.title, win.content);
             }
         });
     }
