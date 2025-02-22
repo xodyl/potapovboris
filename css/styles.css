@@ -1,9 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Fontdiner+Swanky&family=VT323&display=swap');
+@font-face {
+    font-family: 'bios';
+    src: url('../static/fonts/WebPlus_IBM_BIOS.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "bios", serif;
 }
 
 canvas {
@@ -20,10 +27,7 @@ header {
   align-items: center; 
   margin-top: 20px;
 
-  font-family: "VT323", serif;
-  font-weight: 10;
-  font-size: 25px;
-  font-style: thin;
+  font-size: 15px;
 }
 
 main {
@@ -41,10 +45,7 @@ footer {
   color: white;
   margin-bottom: 20px;
   text-align: center;
-  font-family: "VT323", serif;
-  font-weight: 10;
-  font-size: 20px;
-  font-style: thin;
+  font-size: 12px;
 }
 
 nav {
@@ -63,38 +64,36 @@ a {
 .nav-list {
   align-items: baseline;
   margin: 0px 20px 0px 20px;
-  padding: 0px 10px 0px 10px;
   gap: 10px;
   display: flex;
   background: black;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.9);
   z-index: 999;
+  font-size: 15px;
 }
 
 .logo {
+  padding: 5px;
   white-space: nowrap;
   margin: 0px 20px 0px 20px;
-  padding: 0px 10px 0px 10px;
   gap: 10px;
   display: flex;
   background: black;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.9);
   z-index: 999;
+  font-size: 15px;
 
 }
 
 .text-container{
-  padding: 0 5px 0 5px; 
+  padding: 5px;
   text-align: justify;
-
-  font-family: "VT323", serif;
-  font-weight: 10;
-  font-size: 20px;
-  font-style: thin;
+  font-size: 10px;
   line-height: 1;
 }
 
 .link {
+  padding: 5px;
   position: relative;
 }
 
@@ -135,29 +134,17 @@ a {
   min-height: 100vh;
 }
 
-.logo-name-font {
-  font-family: "Fontdiner Swanky", serif;
-  font-size: 100px;
-  font-weight: regular;
-  white-space: nowrap;
-  user-select: none;
-}
-
 .container {
-  /* display: flex; */
   position: absolute;
   width: auto;  
   height: auto; 
   min-height: auto;
   background-color: rgba(255, 255, 255, 0.8);
-  /* border: 1px solid #ccc; */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.9);
   cursor: move;
   overflow: hidden;
 
-  font-family: "VT323", serif;
-  font-weight: 10;
-  font-size: 20px;
+  font-size: 15px;
 
   pointer-events: auto; 
 }
@@ -170,25 +157,24 @@ a {
   color: white;
   cursor: move;
   user-select: none;
+  font-size: 12px;
 }
 
 .title {
-  padding: 0px 5px 0px 5px;
+  padding: 5px;
   white-space: nowrap; 
   overflow: hidden; 
   text-overflow: ellipsis;
 }
 
 .close-btn {
-  padding: 0px 10px 0px 10px;
+  padding: 5px;
   background: transparent;
   border: none;
   color: #fff;
   cursor: pointer;
 
-  font-family: "VT323", serif;
-  font-weight: 10;
-  font-size: 20px;
+  font-size: 15px;
 }
 
 .close-btn:hover {
@@ -200,11 +186,10 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* min-width: 100px; */
-  /* min-height: 100px; */
 }
 
 .text-content {
+  margin-top: 5px;
   overflow: hidden;
   flex: 1;
   display: flex;
@@ -220,30 +205,14 @@ a {
   pointer-events: auto;
 }
 
-/* .resize-handle { */
-/*   position: absolute; */
-/*   bottom: 5px; */
-/*   right: 5px; */
-/*   width: 10px; */
-/*   height: 10px; */
-/*   background-color: black; */
-/*   border: 1px solid #ccc; */
-/*   cursor: se-resize; */
-/* } */
-/*  */
-
 .header-tag-container {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  /* margin: 0px 20px 0px 20px; */
-  /* padding: 0px 10px 0px 10px; */
   display: flex;
   gap: 10px;
-  font-size: 20px;
   justify-content: center;
   align-items: center;
-  /* align-items: baseline; */
 }
 
 .header-tag {
@@ -251,6 +220,7 @@ a {
   color: white;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
+  font-size: 12px;
 }
 
 .header-tag.active {
@@ -271,5 +241,5 @@ a {
     color: white;
     background-color: black;
     padding: 0 2.5px 0 2.5px;
-    font-size: 15px;
+    font-size: 10px;
 }
