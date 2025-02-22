@@ -406,7 +406,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }, moveDuration * 1000);
     }
 
+    let currentRender = null;
+
     function initialize3DRenderer(canvas) {
+        if (currentRender) {
+            currentRender.stop();  // Остановка предыдущего рендера
+        }
+
         // Обновляем размеры канваса
         canvas.width = canvas.clientWidth;
         canvas.height = canvas.clientHeight;
